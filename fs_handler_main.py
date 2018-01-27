@@ -19,8 +19,8 @@ def check_dir_exists(target_directory):
     return os.path.exists(target_directory)
 
 
-def check_file_exists(new_file_name):
-    return os.path.isfile(new_file_name)
+def check_file_exists(new_filename):
+    return os.path.isfile(new_filename)
 
 
 # Execute this, only if the script is invoked directly from the command line
