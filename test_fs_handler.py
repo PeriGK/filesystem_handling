@@ -68,7 +68,7 @@ class FileSystemHandlerTest(unittest.TestCase):
     @mock.patch('fs_handler_main.os.path.isfile')
     @mock.patch('fs_handler_main.os.remove')
     def test_delete_file_failure_permission_error(self, mock_os_remove, mock_os_is_file):
-        print('test_delete_file_failure_not_found')
+        print('test_delete_file_failure_permission_error')
         self.directory = '/etc/'
         self.new_filename = 'resolv.conf'
         mock_os_is_file.return_value = True
@@ -82,8 +82,6 @@ class FileSystemHandlerTest(unittest.TestCase):
         self.assertTrue(check_file_exists(self.new_filename))
         mock_os_is_file.assert_called_with(self.new_filename)
 
-    # TODO: failure
-
     @mock.patch('fs_handler_main.os.path.isfile')
     def test_check_file_exists_failure(self, mock_os_is_file):
         print('test_check_file_exists_failure')
@@ -91,4 +89,16 @@ class FileSystemHandlerTest(unittest.TestCase):
         self.assertFalse(check_file_exists(self.new_filename))
         mock_os_is_file.assert_called_with(self.new_filename)
 
-    # TODO: Dir
+    @mock.patch('fs_handler_main.os.path.exists')
+    def test_check_dir_exists_success(self, mock_os_dir_exists):
+        print('test_check_dir_exists_success')
+        mock_os_dir_exists.return_value = True
+        self.assertTrue(check_dir_exists(self.directory))
+        mock_os_dir_exists.assert_called_with(self.directory)
+
+    @mock.patch('fs_handler_main.os.path.exists')
+    def test_check_dir_exists_failure(self, mock_os_dir_exists):
+        print('test_check_dir_exists_failure')
+        mock_os_dir_exists.return_value = False
+        self.assertFalse(check_dir_exists(self.directory))
+        mock_os_dir_exists.assert_called_with(self.directory)
