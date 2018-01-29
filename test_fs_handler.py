@@ -15,7 +15,6 @@ class FileSystemHandlerTest(unittest.TestCase):
         self.full_path = os.path.join(self.directory, self.new_filename)
 
     def tearDown(self):
-
         # This is something not very useful, it is only written this way to demonstrate how tearDown works
         print('tearDown: Reset instance variables')
         self.directory = ''
@@ -48,6 +47,7 @@ class FileSystemHandlerTest(unittest.TestCase):
         mock_check_file_exists.return_value = False
         self.assertFalse(create_file(self.directory, self.new_filename))
 
+    # We mock the fs_handler_main.os.* modules, if we mock the os provided from python directly, it will not work
     @mock.patch('fs_handler_main.os.path.isfile')
     @mock.patch('fs_handler_main.os.remove')
     def test_delete_file_success(self, mock_os_remove, mock_os_is_file):
